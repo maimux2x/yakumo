@@ -31,6 +31,8 @@ module Yakumo
       puts body[:translations].map {|translation|
         translation[:text]
       }.join
+    rescue => e
+      puts "error: #{e.message}"
     end
 
     private
