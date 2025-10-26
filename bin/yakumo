@@ -26,7 +26,7 @@ module Yakumo
         }.to_json
       })
 
-      body = JSON.parse(res.body, symbolize_names: true)
+      body = res.json(symbolize_names: true)
 
       puts body[:translations].map {|translation|
         translation[:text]
