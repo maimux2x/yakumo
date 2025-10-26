@@ -15,7 +15,7 @@ module Yakumo
         method: :post,
 
         headers: {
-          'Authorization' => "DeepL-Auth-Key #{client}",
+          'Authorization' => "DeepL-Auth-Key #{api_key}",
           'Content-Type'  => 'application/json'
         },
 
@@ -37,8 +37,8 @@ module Yakumo
 
     private
 
-    def client
-      @client ||= ENV.fetch('API_KEY')
+    def api_key
+      @api_key ||= ENV.fetch('API_KEY')
     end
   end
 end
