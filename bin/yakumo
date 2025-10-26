@@ -5,7 +5,7 @@ require 'thor'
 
 module Yakumo
   class CLI < Thor
-    desc 'translate WORDS', 'Translate'
+    desc 'translate WORDS', 'You can translate words on the CLI'
 
     method_option :from, type: :string, default: 'JA', desc: 'Source language'
     method_option :to, type: :string, default: 'EN', desc: 'Language after translation'
