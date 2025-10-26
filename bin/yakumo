@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+require 'fetch-api'
+require 'thor'
+
+module Yakumo
+  class CLI < Thor
+    desc 'translate WORDS', 'Translate'
+
+    method_option :from, type: :string, default: 'JA', desc: 'Source language'
+    method_option :to, type: :string, default: 'EN', desc: 'Language after translation'
+
+    def translate(*words)
+      res = Fetch::API.fetch('https://api-free.deepl.com/v2/translate', **{
+        method: :post,
+
+        headers: {
+          'Authorization' => "DeepL-Auth-Key #{client}",
+          'Content-Type'  => 'application/json'
+        },
+
+        body: {
+          'text'        => words,
+          'source_lang' => options[:from],
+          'target_lang' => options[:to]
+        }.to_json
+      })
+
+      body = JSON.parse(res.body, symbolize_names: true)
+
+      puts body[:translations].map {|translation|
+        translation[:text]
+      }.join
+    end
+
+    private
+
+    def client
+      @client ||= ENV.fetch('API_KEY')
+    end
+  end
+end
+
+Yakumo::CLI.start ARGV
